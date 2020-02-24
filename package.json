@@ -1,0 +1,22 @@
+{
+  "name": "@kad/swagger-cli",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "swagger-cli": "./bin/swagger-model.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "R.I.P",
+  "license": "ISC",
+  "dependencies": {
+    "autorest": "^2.0.4407",
+    "commander": "^4.1.0",
+    "ramda": "^0.27.0"
+  }
+}

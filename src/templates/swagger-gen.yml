@@ -1,0 +1,28 @@
+typescript: true
+enum-types: true
+model-date-time-as-string: true
+input-file: http://review-feature-35-4thjxx.cube-api-wxapp.devkubeapp.360kad.com/v2/api-docs
+# input-file: https://tstcubewxapi.360kad.com/v2/api-docs
+output-folder: src
+source-code-folder-path: swagger
+directive:
+  -
+    from: swagger-document
+    where: $..operationId
+    transform: >-
+      let i = 0;
+      return $.replace(/\_(\w)/g, (_, letter) => {
+        if((++i) < 4) return "_" + letter;
+
+        return letter.toUpperCase();
+      })
+  -
+    from: swagger-document
+    where: $.paths.*.*
+    transform: >-
+      $.operationId = `${($.tags || [])[0] || "default"}_${$.operationId}`
+  -
+    from: swagger-document
+    where: $.definitions.*.properties.*
+    transform: >-
+      if($.format === 'date') $.format = 'date-time'

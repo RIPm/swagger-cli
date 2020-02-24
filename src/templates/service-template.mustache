@@ -1,0 +1,17 @@
+import { serviceClient } from "{{&serverClientPath}}"
+import { {{&operationClass}} } from "{{&operationsPath}}"
+{{#operationMapperPath}}
+import * as mappers from "{{&operationMapperPath}}"
+{{/operationMapperPath}}
+
+
+{{#clientName}}
+export const {{&clientName}} = new {{&operationClass}}(serviceClient);
+{{/clientName}}
+{{^clientName}}
+export default new {{&operationClass}}(serviceClient)
+{{/clientName}}
+
+{{#operationMapperPath}}
+export { mappers }
+{{/operationMapperPath}}
