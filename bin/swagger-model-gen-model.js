@@ -3,9 +3,10 @@ const child_process = require('child_process');
 const path = require('path');
 const fs   = require('fs');
 const jsonfile = require('jsonfile');
+const R    = require('ramda');
 const configuration = require('../src/configuration');
 
-const cacheConfigurePath =  __dirname + "/.autorest.json";
+const cacheConfigurePath =  __dirname + "/.autorest.temp.json";
 
 program
     .usage("<path>")
@@ -22,7 +23,7 @@ const args = program.args;
 const [configPath] = args;
 const config = configuration.mergeConfig();
 
-const autorestConfig = configPath ? configuration.getConfig(configPath) : config.autorest;
+const autorestConfig = configPath ? R.mergeDeepLeft(configuration.getConfig(configPath), {}) : config.autorest;
 
 autorestConfig['output-folder'] = path.resolve(`${process.cwd()}/${autorestConfig['output-folder']}`);
 autorestConfig['input-file'] = path.resolve(`${process.cwd()}/${autorestConfig['input-file'] ? autorestConfig['input-file'] : config.pull.output}`) ;
@@ -63,6 +64,8 @@ jsonfile.writeFile(cacheConfigurePath, autorestConfig, (error) => {
             genModel(cacheConfigurePath);
         })
     }else {
+        console.log('正在生成model');
+
         genModel(cacheConfigurePath);
     }
 });

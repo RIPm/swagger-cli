@@ -46,6 +46,11 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+mustache@^4.0.1:
+  version "4.0.1"
+  resolved "http://npm.360kad.com/mustache/download/mustache-4.0.1.tgz#d99beb031701ad433338e7ea65e0489416c854a2"
+  integrity sha1-2ZvrAxcBrUMzOOfqZeBIlBbIVKI=
+
 ramda@^0.27.0:
   version "0.27.0"
   resolved "http://npm.360kad.com/ramda/download/ramda-0.27.0.tgz#915dc29865c0800bf3f69b8fd6c279898b59de43"

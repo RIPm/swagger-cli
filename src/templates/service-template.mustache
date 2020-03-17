@@ -1,7 +1,7 @@
-import { serviceClient } from "{{&serverClientPath}}"
-import { {{&operationClass}} } from "{{&operationsPath}}"
+import serviceClient from "{{&importRoot}}{{&serverClientPath}}"
+import { {{&operationClass}} } from "{{&importRoot}}{{&operationsPath}}"
 {{#operationMapperPath}}
-import * as mappers from "{{&operationMapperPath}}"
+import * as mappers from "{{&importRoot}}{{&operationMapperPath}}"
 {{/operationMapperPath}}
 
 

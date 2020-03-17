@@ -2,9 +2,12 @@ const yaml = require('js-yaml');
 const fs   = require('fs');
 const path = require('path');
 const R    = require('ramda');
+const transformer = require('../src/transformer');
 
 const defaultOutputSwaggerConfigFilename = './apidocs.config.json';
 const autoresetConfigTemplatePath = __dirname + "/templates/swagger-gen.yml";
+const source = path.resolve(`${process.cwd()}/src`);
+
 const defaultConfig = {
     pull: {
         docsUrl: '',
@@ -13,8 +16,19 @@ const defaultConfig = {
     autorest: getAutoresetConfig(autoresetConfigTemplatePath),
     service: {
         swaggerRoot: 'swagger',
-        file: 'services',
-        root: path.resolve(`${process.cwd()}/src`)
+        outputDir: 'services',
+        root: source,
+        transform:{
+            transformer: transformer,
+            templatePath: __dirname + "/templates/service-template.mustache",
+            // TODO：multi or single. 单个文件或多个
+            mode: 'multi',
+            extraData: {
+                isDefaultExport: true,
+                importRoot: '../',
+                serverClientPath: 'serverClient',
+            }
+        }
     }
 }
 
@@ -52,7 +66,7 @@ function getConfig(path) {
 
 function mergeConfig() {
     const config = getConfig(path.resolve(`${process.cwd()}/swagger-cli.json`));
-
+    console.log(config)
     return R.mergeDeepLeft(config, defaultConfig);
 }
 

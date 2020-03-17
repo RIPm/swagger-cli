@@ -23,3 +23,4 @@ old
 _site
 .vscode
 lib/
+*.temp
