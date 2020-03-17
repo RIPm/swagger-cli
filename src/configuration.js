@@ -4,7 +4,7 @@ const path = require('path');
 const R    = require('ramda');
 
 const defaultOutputSwaggerConfigFilename = './apidocs.config.json';
-const autoresetConfigTemplatePath = __dirname + "/templates/service-template.mustache";
+const autoresetConfigTemplatePath = __dirname + "/templates/swagger-gen.yml";
 const defaultConfig = {
     pull: {
         docsUrl: '',
@@ -35,12 +35,16 @@ function isYaml(text) {
 }
 
 function getConfig(path) {
-    if(isJson(path)) {
-        return fs.readFileSync(path, 'utf-8');
-    }else if(isJs(path)) {
-        return require(path);
-    }else if(isYaml(path)) {
-        return getAutoresetConfig(path);
+    if(fs.existsSync(path)) {
+        if(isJson(path)) {
+            return JSON.parse(fs.readFileSync(path, 'utf-8'));
+        }else if(isJs(path)) {
+            return require(path);
+        }else if(isYaml(path)) {
+            return getAutoresetConfig(path);
+        }else {
+            return {}
+        }
     }else {
         return {}
     }

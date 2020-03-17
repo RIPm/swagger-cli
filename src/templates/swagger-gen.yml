@@ -1,7 +1,7 @@
 typescript: true
 enum-types: true
 model-date-time-as-string: true
-input-file: http://review-feature-35-4thjxx.cube-api-wxapp.devkubeapp.360kad.com/v2/api-docs
+# input-file: http://review-feature-35-4thjxx.cube-api-wxapp.devkubeapp.360kad.com/v2/api-docs
 # input-file: https://tstcubewxapi.360kad.com/v2/api-docs
 output-folder: src
 source-code-folder-path: swagger

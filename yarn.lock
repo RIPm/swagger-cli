@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+argparse@^1.0.7:
+  version "1.0.10"
+  resolved "http://npm.360kad.com/argparse/download/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
+  integrity sha1-vNZ5HqWuCXJeF+WtmIE0zUCz2RE=
+  dependencies:
+    sprintf-js "~1.0.2"
+
 autorest@^2.0.4407:
   version "2.0.4407"
   resolved "http://npm.360kad.com/autorest/download/autorest-2.0.4407.tgz#56c29ab685b903e7a4cbdb0b0b5e671d174ab6fc"
@@ -12,7 +19,44 @@ commander@^4.1.0:
   resolved "http://npm.360kad.com/commander/download/commander-4.1.0.tgz#545983a0603fe425bc672d66c9e3c89c42121a83"
   integrity sha1-VFmDoGA/5CW8Zy1myePInEISGoM=
 
+esprima@^4.0.0:
+  version "4.0.1"
+  resolved "http://npm.360kad.com/esprima/download/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
+  integrity sha1-E7BM2z5sXRnfkatph6hpVhmwqnE=
+
+graceful-fs@^4.1.6:
+  version "4.2.3"
+  resolved "http://npm.360kad.com/graceful-fs/download/graceful-fs-4.2.3.tgz#4a12ff1b60376ef09862c2093edd908328be8423"
+  integrity sha1-ShL/G2A3bvCYYsIJPt2Qgyi+hCM=
+
+js-yaml@^3.13.1:
+  version "3.13.1"
+  resolved "http://npm.360kad.com/js-yaml/download/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
+  integrity sha1-r/FRswv9+o5J4F2iLnQV6d+jeEc=
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
+jsonfile@^6.0.1:
+  version "6.0.1"
+  resolved "http://npm.360kad.com/jsonfile/download/jsonfile-6.0.1.tgz#98966cba214378c8c84b82e085907b40bf614179"
+  integrity sha1-mJZsuiFDeMjIS4LghZB7QL9hQXk=
+  dependencies:
+    universalify "^1.0.0"
+  optionalDependencies:
+    graceful-fs "^4.1.6"
+
 ramda@^0.27.0:
   version "0.27.0"
   resolved "http://npm.360kad.com/ramda/download/ramda-0.27.0.tgz#915dc29865c0800bf3f69b8fd6c279898b59de43"
   integrity sha1-kV3CmGXAgAvz9puP1sJ5iYtZ3kM=
+
+sprintf-js@~1.0.2:
+  version "1.0.3"
+  resolved "http://npm.360kad.com/sprintf-js/download/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
+  integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
+
+universalify@^1.0.0:
+  version "1.0.0"
+  resolved "http://npm.360kad.com/universalify/download/universalify-1.0.0.tgz#b61a1da173e8435b2fe3c67d29b9adf8594bd16d"
+  integrity sha1-thodoXPoQ1sv48Z9Kbmt+FlL0W0=

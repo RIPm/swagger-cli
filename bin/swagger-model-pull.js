@@ -1,4 +1,5 @@
 const program = require('commander');
+const path = require('path');
 const filedownload = require('../src/filedownload');
 const configuration = require('../src/configuration');
 
@@ -14,15 +15,16 @@ program
 
 const args = program.args;
 const [url] = args;
-const pullConfig = configuration.defaultConfig.pull;
+const config = configuration.mergeConfig();
+const pullConfig = config.pull;
+let filename = pullConfig.output;
 
-if(!url) {
-    const {output: filename, docsUrl} = pullConfig;
+if(program.output) filename = program.output;
 
-    filedownload(filename, docsUrl);
+const remoteUrl = url ? url : pullConfig.docsUrl;
+
+if(remoteUrl) {
+    filedownload(path.resolve(`${process.cwd()}/`, filename), url ? url : pullConfig.docsUrl);
 }else {
-    let filename = pullConfig.output;
-    if(program.output) filename = program.output;
-
-    filedownload(filename, url);
+    throw new Error('请填入远程swagger api config地址');
 }

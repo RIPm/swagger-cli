@@ -17,6 +17,8 @@
   "dependencies": {
     "autorest": "^2.0.4407",
     "commander": "^4.1.0",
+    "js-yaml": "^3.13.1",
+    "jsonfile": "^6.0.1",
     "ramda": "^0.27.0"
   }
 }
