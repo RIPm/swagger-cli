@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const program = require('commander');
 const child_process = require('child_process');
 const path = require('path');
@@ -25,11 +27,11 @@ const config = configuration.mergeConfig();
 
 const autorestConfig = configPath ? R.mergeDeepLeft(configuration.getConfig(configPath), {}) : config.autorest;
 
-autorestConfig['output-folder'] = path.resolve(`${process.cwd()}/${autorestConfig['output-folder']}`);
-autorestConfig['input-file'] = path.resolve(`${process.cwd()}/${autorestConfig['input-file'] ? autorestConfig['input-file'] : config.pull.output}`) ;
+autorestConfig['output-folder'] = path.resolve(process.cwd() + '/' + autorestConfig['output-folder']);
+autorestConfig['input-file'] = path.resolve(process.cwd() + '/' + (autorestConfig['input-file'] ? autorestConfig['input-file'] : config.pull.output));
 
 function genModel(configPath) {
-    child_process.exec(`npx autorest ${cacheConfigurePath}`, (error, stdout, stderr) => {
+    child_process.exec('npx autorest ' + cacheConfigurePath, (error, stdout, stderr) => {
         if(error) {
             console.error('error: ' + error);
             return;
@@ -51,7 +53,7 @@ jsonfile.writeFile(cacheConfigurePath, autorestConfig, (error) => {
         console.log('尚未拉取swagger api config');
         console.log('自动拉取中...');
 
-        child_process.exec(`npx swagger-cli pull -o ${autorestConfig['input-file']}`, (error, stdout, stderr) => {
+        child_process.exec('npx swagger-cli pull -o ' + autorestConfig['input-file'], (error, stdout, stderr) => {
             if(error) {
                 console.error('error: ' + error);
                 return;

@@ -6,7 +6,7 @@ const transformer = require('../src/transformer');
 
 const defaultOutputSwaggerConfigFilename = './apidocs.config.json';
 const autoresetConfigTemplatePath = __dirname + "/templates/swagger-gen.yml";
-const source = path.resolve(`${process.cwd()}/src`);
+const source = path.resolve(process.cwd() + '/src');
 
 const defaultConfig = {
     pull: {
@@ -65,8 +65,8 @@ function getConfig(path) {
 }
 
 function mergeConfig() {
-    const config = getConfig(path.resolve(`${process.cwd()}/swagger-cli.json`));
-    console.log(config)
+    const config = getConfig(path.resolve(process.cwd() + '/swagger-cli.json'));
+
     return R.mergeDeepLeft(config, defaultConfig);
 }
 

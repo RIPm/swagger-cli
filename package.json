@@ -1,9 +1,9 @@
 {
   "name": "@kad/swagger-cli",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "bin": {
-    "swagger-cli": "./bin/swagger-model.js"
+    "swagger-cli": "./bin/swagger-model"
   },
   "files": [
     "bin",

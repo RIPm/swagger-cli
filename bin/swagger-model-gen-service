@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const program = require('commander');
 const path = require('path');
 const fs   = require('fs');
@@ -40,7 +42,7 @@ if(fs.existsSync(source+"/"+swaggerRoot)){
     }
 
     getCodes(genConfig).forEach(([name, code]) => {
-        fs.writeFile(`${outputDir}/${name}`, code, function(error){
+        fs.writeFile(outputDir + '/' + name, code, function(error){
             if(error){
                 console.error(error);
                 return false;

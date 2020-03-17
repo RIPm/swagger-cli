@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const program = require('commander');
 const path = require('path');
 const filedownload = require('../src/filedownload');
@@ -24,7 +26,7 @@ if(program.output) filename = program.output;
 const remoteUrl = url ? url : pullConfig.docsUrl;
 
 if(remoteUrl) {
-    filedownload(path.resolve(`${process.cwd()}/`, filename), url ? url : pullConfig.docsUrl);
+    filedownload(path.resolve(process.cwd()+'/', filename), url ? url : pullConfig.docsUrl);
 }else {
     throw new Error('请填入远程swagger api config地址');
 }
