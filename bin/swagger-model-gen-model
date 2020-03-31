@@ -32,7 +32,7 @@ autorestConfig['output-folder'] = path.resolve(process.cwd() + '/' + autorestCon
 autorestConfig['input-file'] = path.resolve(process.cwd() + '/' + (autorestConfig['input-file'] ? autorestConfig['input-file'] : config.pull.output));
 
 function genModel(configPath) {
-    delDir(autorestConfig['output-folder'] + '/' + autorestConfig['source-code-folder-path']);
+    // delDir(autorestConfig['output-folder'] + '/' + autorestConfig['source-code-folder-path']);
 
     child_process.exec('npx autorest ' + configPath, (error, stdout, stderr) => {
         if(error) {

@@ -41,8 +41,8 @@ if(fs.existsSync(source+"/"+swaggerRoot)){
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir);
     }else {
-        delDir(outputDir);
-        fs.mkdirSync(outputDir);
+        // delDir(outputDir);
+        // fs.mkdirSync(outputDir);
     }
 
     getCodes(genConfig).forEach(([name, code]) => {
