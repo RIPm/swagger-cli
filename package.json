@@ -1,6 +1,6 @@
 {
   "name": "@kad/swagger-cli",
-  "version": "1.0.2",
+  "version": "1.1.2",
   "description": "",
   "bin": {
     "swagger-cli": "./bin/swagger-model"
@@ -15,6 +15,7 @@
   "author": "R.I.P",
   "license": "ISC",
   "dependencies": {
+    "autobind-decorator": "^2.4.0",
     "autorest": "^2.0.4407",
     "commander": "^4.1.0",
     "js-yaml": "^3.13.1",

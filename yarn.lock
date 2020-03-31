@@ -9,6 +9,11 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
+autobind-decorator@^2.4.0:
+  version "2.4.0"
+  resolved "http://npm.360kad.com/autobind-decorator/download/autobind-decorator-2.4.0.tgz#ea9e1c98708cf3b5b356f7cf9f10f265ff18239c"
+  integrity sha1-6p4cmHCM87WzVvfPnxDyZf8YI5w=
+
 autorest@^2.0.4407:
   version "2.0.4407"
   resolved "http://npm.360kad.com/autorest/download/autorest-2.0.4407.tgz#56c29ab685b903e7a4cbdb0b0b5e671d174ab6fc"

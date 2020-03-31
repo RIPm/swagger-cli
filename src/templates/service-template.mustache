@@ -1,9 +1,12 @@
+import { boundClass } from "autobind-decorator"
 import serviceClient from "{{&importRoot}}{{&serverClientPath}}"
-import { {{&operationClass}} } from "{{&importRoot}}{{&operationsPath}}"
+import { {{&operationClass}} as Base{{&operationClass}} } from "{{&importRoot}}{{&operationsPath}}"
 {{#operationMapperPath}}
 import * as mappers from "{{&importRoot}}{{&operationMapperPath}}"
 {{/operationMapperPath}}
 
+
+const {{&operationClass}} = (boundClass(Base{{&operationClass}})) as typeof Base{{&operationClass}};
 
 {{#clientName}}
 export const {{&clientName}} = new {{&operationClass}}(serviceClient);
