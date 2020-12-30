@@ -1,0 +1,131 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const path = require('path');
+const fs   = require('fs');
+const R    = require('ramda');
+const jsonfile = require('jsonfile');
+const getCodes = require('../src/getCodes');
+const configuration = require('../src/configuration');
+const transformer = require('../src/transformer');
+const delDir = require('../src/delDir');
+const filedownload = require('../src/filedownload');
+const { genModel } = require('../src/utils');
+
+const generateCacheConfigurePath = (index) => `${__dirname}/.autorest_${index}.temp.json`;
+
+program
+  .option('-p, --pull', 'is pull swagger docs')
+  .option('-m, --model', 'is generate swagger model')
+  .option('-s, --service', 'is generate swagger service')
+  .on('--help', function () {
+    console.log('$ swagger-model gen-with-config -pms');
+  })
+  .parse(process.argv);
+
+const config = configuration.mergeConfig();
+
+function genServiceFactory(config) {
+  
+  const serviceConfig = config.service;
+  
+  const root = serviceConfig.root;
+  const swaggerRoot = serviceConfig.swaggerRoot;
+  const serviceRoot = serviceConfig.outputDir;
+  
+  const transform = serviceConfig.transform;
+  const swaggerPath = serviceConfig.root + '/' + swaggerRoot;
+
+  if(!swaggerRoot || !fs.existsSync(swaggerPath)) {
+    console.error('请先生成model于', swaggerRoot);
+    return;
+  }
+  
+  console.log('开始生成service');
+  
+  const genConfig = {
+    root: root,
+    operationsPath: `${swaggerRoot}/operations`,
+    modelsPath: `${swaggerRoot}/models`,
+    ...transform
+  }
+  
+  const outputDir = root + "/" + serviceRoot;
+  
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir);
+  }else {
+    // delDir(outputDir);
+    // fs.mkdirSync(outputDir);
+  }
+  
+  getCodes(genConfig).forEach(([name, code]) => {
+    fs.writeFile(outputDir + '/' + name, code, function(error){
+      if(error){
+        console.error(error);
+        return false;
+      }
+      console.log(name + ' 生成成功！');
+    });
+  })
+}
+
+function genModelFactory(config, key) {
+  const autorestConfig = config.autorest;
+  
+  autorestConfig['output-folder'] = path.resolve(process.cwd() + '/' + autorestConfig['output-folder']);
+  autorestConfig['input-file'] = path.resolve(process.cwd() + '/' + (autorestConfig['input-file'] ? autorestConfig['input-file'] : config.pull.outputFilename));
+  
+  if(!autorestConfig['input-file'] || !fs.existsSync(autorestConfig['input-file'])) {
+    console.error('没有找到swagger文档', autorestConfig['input-file']);
+    return;
+  }
+  
+  const cacheConfigurePath = generateCacheConfigurePath(key);
+  
+  (new Promise((resolve) => {
+    jsonfile.writeFile(cacheConfigurePath, autorestConfig, (error) => {
+      if(error){
+        console.error(error);
+        return false;
+      }
+      
+      console.log('正在生成model');
+      genModel(cacheConfigurePath,resolve);
+    });
+  })).then(() => {
+    if(program.service) {
+      genServiceFactory(config);
+    }
+  })
+}
+
+if(program.pull){
+  config.map((c, index) => {
+    const pull = c.pull;
+    const filePath = path.resolve(process.cwd() + '/', pull.outputFilename);
+    
+    filedownload(filePath, pull.docsUrl)
+      .then(() => {
+        if(program.model){
+          genModelFactory(c, index);
+        }
+      })
+      .catch(() => {
+        console.error('请求错误', pull.docsUrl);
+      });
+  })
+}
+
+if(!program.pull && program.model){
+  config.map((c, index) => {
+    genModelFactory(c, index);
+  });
+}
+
+if(!program.model && program.service){
+  config.map((c, index) => {
+    genServiceFactory(c);
+  })
+}
+

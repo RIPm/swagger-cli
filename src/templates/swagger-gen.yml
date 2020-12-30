@@ -20,7 +20,10 @@ directive:
     from: swagger-document
     where: $.paths.*.*
     transform: >-
-      $.operationId = `${($.tags || [])[0] || "default"}_${$.operationId}`
+      const controllerName = ($.tags || [])[0] || "default";
+      let newMethodName = $.operationId.replace(/(\_)?\d+$/, '');
+      newMethodName = `${controllerName.replace('-controller', '')}-${newMethodName}`;
+      $.operationId = `${controllerName}_${newMethodName}`
   -
     from: swagger-document
     where: $.definitions.*.properties.*

@@ -4,7 +4,8 @@ const program = require('commander');
 
 program
     .usage('<command> [options]')
-    .command('pull <url>', 'Download swagger config')
-    .command('gen-model [otherParams...]', 'Create swagger model by autoreset')
-    .command('gen-service [otherParams...]', 'Create service by swagger model')
+    .command('pull <url>', 'Download swagger config using command line parameters')
+    .command('gen-model [otherParams...]', 'Create swagger model by autoreset using command line parameters')
+    .command('gen-service [otherParams...]', 'Create service by swagger model using command line parameters')
+    .command('gen [otherParams...]', 'generate swagger model and service using config')
     .parse(process.argv);

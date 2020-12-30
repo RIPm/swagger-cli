@@ -4,20 +4,19 @@ const path = require('path');
 const R    = require('ramda');
 const transformer = require('../src/transformer');
 
-const defaultOutputSwaggerConfigFilename = './apidocs.config.json';
 const autoresetConfigTemplatePath = __dirname + "/templates/swagger-gen.yml";
-const source = path.resolve(process.cwd() + '/src');
+const root = path.resolve(process.cwd() + '/src');
 
 const defaultConfig = {
     pull: {
         docsUrl: '',
-        output: defaultOutputSwaggerConfigFilename
+        outputFilename: ''
     },
     autorest: getAutoresetConfig(autoresetConfigTemplatePath),
     service: {
         swaggerRoot: 'swagger',
         outputDir: 'services',
-        root: source,
+        root: root,
         transform:{
             transformer: transformer,
             templatePath: __dirname + "/templates/service-template.mustache",
@@ -66,8 +65,14 @@ function getConfig(path) {
 
 function mergeConfig() {
     const config = getConfig(path.resolve(process.cwd() + '/swagger-cli.json'));
-
-    return R.mergeDeepLeft(config, defaultConfig);
+    
+    if(Array.isArray(config)){
+        return config.map((c) => {
+            return R.mergeDeepLeft(c, defaultConfig)
+        })
+    } else {
+        return [R.mergeDeepLeft(config, defaultConfig)]
+    }
 }
 
 exports.defaultConfig = defaultConfig;

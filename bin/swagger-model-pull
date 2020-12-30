@@ -3,30 +3,20 @@
 const program = require('commander');
 const path = require('path');
 const filedownload = require('../src/filedownload');
-const configuration = require('../src/configuration');
 
 program
-    .usage("<url> [options]")
-    .option('-o, --output <path>', 'file name')
-    .on('--help', function () {
-        console.log('$ swagger-model pull');
-        console.log('$ swagger-model pull <url>');
-        console.log('$ swagger-model pull <url> -o ./apidocs.config.json');
-    })
-    .parse(process.argv);
+  .usage("<docsUrl> <options>")
+  .option('-o, --outputFilename <path>', 'output filename')
+  .on('--help', function () {
+    console.log('');
+    console.log('$ swagger-model pull <docsUrl> -o ./apidocs.config.json');
+  })
+  .parse(process.argv);
 
 const args = program.args;
-const [url] = args;
-const config = configuration.mergeConfig();
-const pullConfig = config.pull;
-let filename = pullConfig.output;
+const [docsUrl] = args;
 
-if(program.output) filename = program.output;
+if(!docsUrl) throw new Error('please provide docsUrl');
+if(!program.outputFilename) throw new Error('please add parameter --outputFilename');
 
-const remoteUrl = url ? url : pullConfig.docsUrl;
-
-if(remoteUrl) {
-    filedownload(path.resolve(process.cwd()+'/', filename), url ? url : pullConfig.docsUrl);
-}else {
-    throw new Error('请填入远程swagger api config地址');
-}
+filedownload(path.resolve(process.cwd()+'/', program.outputFilename), docsUrl);

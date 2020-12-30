@@ -1,14 +1,7 @@
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-
-function isHttps (url) {
-    return /^https?:\/\/.+/.test(url)
-}
-
-function isHttp (url) {
-    return /^http?:\/\/.+/.test(url)
-}
+const { isHttp, isHttps } = require('../src/utils');
 
 module.exports = function (filename, url) {
     let request = null;
@@ -16,10 +9,16 @@ module.exports = function (filename, url) {
     else if(isHttps(url)) request = https;
     else {
         console.error('Must be http/https');
-        return;
+        return Promise.reject();
     }
 
     const file = fs.createWriteStream(filename);
 
-    request.get(url, (response) => response.pipe(file));
+    return new Promise((resolve, reject) => {
+        request.get(url, (response) => {
+            const result = response.pipe(file)
+    
+            resolve(result);
+        }).on('error', reject);
+    })
 }

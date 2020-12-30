@@ -17,12 +17,12 @@ function findOperationMapperFiles(modelsPath) {
 
 
 module.exports = function getCodes(options) {
-    const source = options.root + '/';
+    const root = options.root + '/';
     const importRoot = options.importRoot;
 
     const serverClientPath = options.serverClientPath;
-    const operationFileList = findFilesByOperations(source + options.operationsPath);
-    const operationMapperFiles = findOperationMapperFiles(source + options.modelsPath);
+    const operationFileList = findFilesByOperations(root + options.operationsPath);
+    const operationMapperFiles = findOperationMapperFiles(root + options.modelsPath);
 
     const templatePath = options.templatePath;
     const transformToCode = options.transformer;
